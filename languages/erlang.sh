@@ -7,7 +7,7 @@
 #
 # Include in your builds via
 # source /dev/stdin <<< "$(curl -sSL https://raw.githubusercontent.com/codeship/scripts/master/languages/erlang.sh)"
-ERLANG_VERSION=${ERLANG_VERSION:="18.3"}
+ERLANG_VERSION=${ERLANG_VERSION:="20.1"}
 ERLANG_PATH=${ERLANG_PATH:=$HOME/erlang}
 CACHED_DOWNLOAD="${HOME}/cache/erlang-OTP-${ERLANG_VERSION}.tar.gz"
 
@@ -20,6 +20,8 @@ wget --continue --output-document "${CACHED_DOWNLOAD}" "https://s3.amazonaws.com
 tar -xaf "${CACHED_DOWNLOAD}" --strip-components=1 --directory "${ERLANG_PATH}"
 "${ERLANG_PATH}/Install" -minimal "${ERLANG_PATH}"
 
+wget https://s3.amazonaws.com/rebar3/rebar3 && chmod +x rebar3
+cp rebar3 ${ERLANG_PATH}/bin
 export PATH="${ERLANG_PATH}/bin:${PATH}"
 
 # check the correct version is yused
